@@ -5,6 +5,7 @@ name: Test AdventOfCode 2022
 
 on:
   push:
+  workflow_dispatch:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
