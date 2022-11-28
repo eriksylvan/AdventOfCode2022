@@ -3,6 +3,9 @@ inputFile = 'input/01_input'
 def depthIncreaseCounter(sw):
     '''Returns the number of times a depth measurement increases
     '''
+
+    # 
+    
     # list comprehension solution inspired by https://www.reddit.com/user/smokebath/
     return sum((sw[i+1] > sw[i] for i in range(len(sw)-1))) 
             
