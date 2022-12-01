@@ -1,65 +1,58 @@
+# https://adventofcode.com/2022/day/1
+
 inputFile = 'input/01_input'
    
-def depthIncreaseCounter(sw):
-    '''Returns the number of times a depth measurement increases
-    '''
-
-    # 
-    
-    # list comprehension solution inspired by https://www.reddit.com/user/smokebath/
-    return sum((sw[i+1] > sw[i] for i in range(len(sw)-1))) 
-            
-    # pd = sw[0]
-    # dc = 0
-    # for d in sw:
-    #     if d>pd:
-    #         dc += 1
-    #     pd = d
-    # return dc
-
-def depthIncreaseCounterSlidingWindow(sw):
-    '''Returns the number of times a depth measurement increases in the 3 value sliding window
-    '''
-    mx = len(sw)
-    pdw = sum(sw[0:3])
-    dc = 0
-    
-    for p in range(1, mx-2):
-        dw = sum(sw[p:p+3])
-        if dw>pdw:
-            dc+=1
-        pdw = dw
-
-    return dc
-
-
-def file2intList(file):
-    '''Reads file return list with the items in file as int
+def file2intListDict(file):
+    '''Reads file return dictionary with key ind Value int list
     Parameters:
     file: the input file
     Returns:
-    list: output as list
+    list: output as dictionary
     '''
-    list = []
+    elfDict = {}
     with open(file) as input:
+        elf=1
+        elfDict[elf]=[]
         for line in input:
-            for item in line.strip().split(' '):
-                list.append(int(item))
-    return list
+            line = line.strip()
+            if line != '':
+                elfDict[elf].append(int(line))
+            else:
+                elf += 1
+                elfDict[elf]=[]
+                
+    return elfDict
+
+def max_calories(e):
+    max = 0
+    for elf, food in e.items():
+        s = sum(food)
+        if s > max:
+            max = s
+    return max
         
 
+def max_3_calories(e):
+    cal_list = []
+    for elf, food in e.items():
+        cal_list.append(sum(food))
+    cal_list.sort(reverse=True)
+    max3 = sum(cal_list[0:3]) 
+    return max3
+
 def day01PartOne():
-    input = file2intList(inputFile)
-    output = depthIncreaseCounter(input)
+    input = file2intListDict(inputFile)
+    output = max_calories(input)
 
     print(
         f'# Solution Day 01, Part one:\n# Answer: {output} \n\n')
 
 
 def day01PartTwo():
-    # input = [199,200,208,210,200,207,240,269,260,263]
-    input = file2intList(inputFile)
-    output = depthIncreaseCounterSlidingWindow(input)
+    input = file2intListDict(inputFile)
+    output =  output = max_3_calories(input)
+
+    
 
     print(
         f'# Solution Day 01, Part two:\n# Answer: {output} \n\n')
@@ -72,11 +65,11 @@ if __name__ == "__main__":
 
 
 # Solution Day 01, Part one:
-# Answer: 1390 
+# Answer: 72478
 
 
 # Solution Day 01, Part two:
-# Answer: 1457 
+# Answer: 210367
 
 
 # Run from terminal:
