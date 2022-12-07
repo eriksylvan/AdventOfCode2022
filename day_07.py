@@ -3,8 +3,8 @@
 # https://adventofcode.com/2022/day/7
 
 
-# inputFile='input/07_input'
-inputFile='input/07_test_input'
+inputFile='input/07_input'
+# inputFile='input/07_test_input'
 
 
 
@@ -24,8 +24,9 @@ class File:
 
 
 # Read input
-currentDir = None
+currentDir = Dir('/',None)
 allDirs = []
+allDirs.append(currentDir)
 with open(inputFile) as input:
 
         for row in input:
@@ -34,41 +35,39 @@ with open(inputFile) as input:
                 # command input
                 if cl[1] == 'cd':
                     #cd
-                    print('cd', cl[2])
+                    # print('cd', cl[2])
                     if cl[2] == '..':
                         # .. jump back
-                        print('..')
-                        currentDir =   currentDir.parent
+                        # print('..')
+                        currentDir = currentDir.parent
                     else:
-                        #create dir
-                        d = Dir(cl[2], currentDir)
-                        currentDir = d
-                        allDirs.append(d)
+                        # change dir
+                        # print(cl[2])
+                        # jump to directory with name
+                        for cd in currentDir.child:
+                            if cd.name == cl[2]:
+                                currentDir = cd
+                                break
+                        
                 else: 
                     if cl[1] == 'ls':
-                        #ls
-                        print('ls')
+                        # ls
+                        # print('ls')
                         pass
             else:
                 # list output
                 if cl[0]=='dir':
                     #dir
-                    print('dir:', cl[1])
-
+                    # print('dir:', cl[1])
+                    d = Dir(cl[1], currentDir)
+                    allDirs.append(d)
+                    currentDir.child.append(d)
                     
                 else:
-                    #file
-                    print('file', cl[0], cl[1])
+                    # file
+                    # print('file', cl[0], cl[1])
                     f = File(cl[1], int(cl[0]))
                     currentDir.files.append(f)
-
-
-print("DIRS")
-        
-for d in allDirs:
-    print(d.name)
-    for f in d.files:
-        print(f.name, f.size)
 
 
 def getDirSize(dir):
@@ -76,15 +75,28 @@ def getDirSize(dir):
     # add all file sizes
     for f in dir.files:
         s+= f.size
-    # acc child directories sizes
+    # add child directories sizes
     for d in dir.child:
-        s+=getDirSize(d)
+        ds = getDirSize(d)
+        s+= ds
     return s
 
-print("SIZES")
+sizes=[]
+tot=0
 for d in allDirs:
     size = getDirSize(d)
-    print(d.name, size)
+    sizes.append(size)
+    # print(d.name, size)
+    if size <= 100000:
+        tot += size
 
+print("Day7 part1:", tot)
 
-
+sizes.sort(reverse=False)
+free = 70000000 - sizes[-1]
+toDel = 30000000 - free
+for delete in sizes:
+    if delete>=toDel:
+        break
+    
+print("Day7 part2:", delete)
