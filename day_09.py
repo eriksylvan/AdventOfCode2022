@@ -77,12 +77,12 @@ def TailWalk(tailP, headP):
 img = Image.new('1', (1000, 1000))  # create a new black 1-bit image (BW)
 pixels = img.load()         # create the pixel map
 
-def drawRope(rope):
-    # PIL accesses images in Cartesian co-ordinates, so it is Image[columns, rows]
-
-    for c in rope:      # for every col:
-        pixels[c[0], c[1]] = 1
-    img.show()
+#def drawRope(rope):
+#    # PIL accesses images in Cartesian co-ordinates, so it is Image[columns, rows]
+#
+#    for c in rope:      # for every col:
+#        pixels[c[0], c[1]] = 1
+#    img.show()
 
 # PART 1
 rope = [(0,0),(0,0)]
@@ -117,8 +117,8 @@ for i in ins:
             rope[t] = tp
             
         tailPath[rope[rlen-1]] = None
-        drawRope(rope)
+#        drawRope(rope)
 
-drawRope(0,100,100)
+#drawRope(0,100,100)
 
 print("Day9 part1:",len(tailPath))
