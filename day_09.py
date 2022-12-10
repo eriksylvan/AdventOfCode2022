@@ -1,7 +1,8 @@
-# day 08
+# day 09
 
 # https://adventofcode.com/2022/day/9
 
+from PIL import Image, ImageDraw   # python -m pip install pillow
 
 inputFile='input/09_input'
 #inputFile='input/09_test_input'
@@ -73,6 +74,16 @@ def TailWalk(tailP, headP):
     return rPos
 
 
+img = Image.new('1', (1000, 1000))  # create a new black 1-bit image (BW)
+pixels = img.load()         # create the pixel map
+
+def drawRope(rope):
+    # PIL accesses images in Cartesian co-ordinates, so it is Image[columns, rows]
+
+    for c in rope:      # for every col:
+        pixels[c[0], c[1]] = 1
+    img.show()
+
 # PART 1
 rope = [(0,0),(0,0)]
         # rope[0] = Head
@@ -91,9 +102,10 @@ print("Day9 part1:",len(tailPath))
 
 # PART 2
 rope = [(0,0),(0,0),(0,0),(0,0),(0,0),(0,0),(0,0),(0,0),(0,0),(0,0)]
-rlen = len(rope)
         # rope[0] = Head
         # rope[9] = Tail
+rlen = len(rope)
+        
 tailPath = {}
 for i in ins:
     for s in range(i[1]): # for evey step
@@ -105,5 +117,8 @@ for i in ins:
             rope[t] = tp
             
         tailPath[rope[rlen-1]] = None
+        drawRope(rope)
+
+drawRope(0,100,100)
 
 print("Day9 part1:",len(tailPath))
