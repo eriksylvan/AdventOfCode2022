@@ -2,11 +2,10 @@
 
 # https://adventofcode.com/2022/day/9
 
-from PIL import Image, ImageDraw   # python -m pip install pillow
+#from PIL import Image, ImageDraw   # python -m pip install pillow
 
 inputFile='input/09_input'
 #inputFile='input/09_test_input'
-
 
 
 ins=[]
@@ -117,8 +116,5 @@ for i in ins:
             rope[t] = tp
             
         tailPath[rope[rlen-1]] = None
-#        drawRope(rope)
-
-#drawRope(0,100,100)
 
 print("Day9 part1:",len(tailPath))
