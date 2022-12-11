@@ -76,10 +76,12 @@ while run:
 
 
 print("Day10 part1:",ans)
+print()
+print()
     
 #print(CRT)
 
-
+print("Day10 part2:")
 for x in range(len(CRT)):
     if(x%40)==0:
         print('')
